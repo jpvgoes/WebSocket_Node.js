@@ -23,6 +23,4 @@ servidorHttp.listen(3000, () => {
 
 const io = new Server(servidorHttp);
 
-io.on("connection", (socket) => {
-  console.log("Um cliente se conectou com o ID:", socket.id);
-});
+export default io;
