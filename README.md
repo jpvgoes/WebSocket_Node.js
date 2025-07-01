@@ -2,6 +2,12 @@
 
 Live Docs is a collaborative real-time document editing application built with Node.js, Express, and Socket.io. It allows multiple users to edit documents simultaneously, with changes instantly synchronized across all connected clients.
 
+<p align="center">
+  <img src="assets/index.png" alt="Home page screenshot" width="600"/>
+  <br>
+  <img src="assets/document.png" alt="Document editing screenshot" width="600"/>
+</p>
+
 ## Features
 
 - **Real-time Collaboration:** Multiple users can edit the same document at the same time, with live updates.
@@ -21,6 +27,9 @@ alura-docs/
 ├── src/
 │   ├── servidor.js
 │   └── socket-back.js
+├── assets/
+│   ├── document.png
+│   └── index.png
 ├── package.json
 └── README.md
 ```
