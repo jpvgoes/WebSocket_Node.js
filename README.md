@@ -50,7 +50,7 @@ alura-docs/
 
    ```sh
    git clone https://github.com/jpvgoes/WebSocket_Node.js.git
-   cd alura-docs
+   cd WebSocket_Node.js
    ```
 
 2. Install dependencies:
