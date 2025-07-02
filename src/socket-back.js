@@ -1,29 +1,16 @@
 //código que interage com o servidor - camada mais interna
 
 import io from "./servidor.js";
-
-const documentos = [
-  {
-    nome: "JavaScript",
-    texto: "texto de javascript...",
-  },
-  {
-    nome: "Node",
-    texto: "texto de node...",
-  },
-  {
-    nome: "Socket.io",
-    texto: "texto de socket.io...",
-  },
-];
+import documentosColecao from "./dbConnect.js";
 
 io.on("connection", (socket) => {
   console.log("Um cliente se conectou com o ID:", socket.id);
 
   //socket para selecionar o documento e enviar o texto para o cliente
-  socket.on("selecionar_documento", (nomeDocumento, devolverTexto) => {
+  socket.on("selecionar_documento", async (nomeDocumento, devolverTexto) => {
     socket.join(nomeDocumento); //o cliente entra na sala com nome do documento
-    const documento = encontrarDocumento(nomeDocumento);
+    const documento = await encontrarDocumento(nomeDocumento);
+    console.log(documento);
     if (documento) {
       devolverTexto(documento.texto);
     }
@@ -49,9 +36,5 @@ io.on("connection", (socket) => {
 
 //encontra o documento na lista de documentos
 function encontrarDocumento(nome) {
-  const documento = documentos.find((documento) => {
-    return documento.nome === nome;
-  });
-
-  return documento;
+  return documentosColecao.findOne({ nome: nome });
 }
