@@ -12,4 +12,21 @@ function updateDocumento(nomeDocumento, texto) {
   );
 }
 
-export { encontrarDocumento, updateDocumento };
+function encontraTodosDocumentos() {
+  return documentosColecao.find({}).toArray();
+}
+
+//adicionar documento
+function adicionarDocumento(nomeDocumento) {
+  return documentosColecao.insertOne({
+    nome: nomeDocumento,
+    texto: "",
+  });
+}
+
+export {
+  encontrarDocumento,
+  updateDocumento,
+  encontraTodosDocumentos,
+  adicionarDocumento,
+};

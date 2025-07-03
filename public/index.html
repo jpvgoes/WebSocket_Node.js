@@ -109,26 +109,7 @@
       </header>
 
       <main>
-        <div id="lista-documentos" class="list-group mb-4">
-          <a
-            href="documento.html?nome=JavaScript"
-            class="list-group-item list-group-item-action"
-          >
-            JavaScript
-          </a>
-          <a
-            href="documento.html?nome=Node"
-            class="list-group-item list-group-item-action"
-          >
-            Node
-          </a>
-          <a
-            href="documento.html?nome=Socket.io"
-            class="list-group-item list-group-item-action"
-          >
-            Socket.io
-          </a>
-        </div>
+        <div id="lista-documentos" class="list-group mb-4"></div>
 
         <form id="form-adiciona-documento" class="row g-3">
           <div class="col-md-8">
@@ -144,7 +125,11 @@
             />
           </div>
           <div class="col-md-4">
-            <button type="submit" class="btn btn-primary w-100">
+            <button
+              id="botao-adicionar"
+              type="submit"
+              class="btn btn-primary w-100"
+            >
               Adicionar
             </button>
           </div>
@@ -157,5 +142,8 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="index.js" type="module"></script>
   </body>
 </html>

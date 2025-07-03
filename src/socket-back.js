@@ -1,10 +1,31 @@
 //código que interage com o servidor - camada mais interna
 
-import { encontrarDocumento, updateDocumento } from "./documentosdb.js";
+import {
+  adicionarDocumento,
+  encontrarDocumento,
+  encontraTodosDocumentos,
+  updateDocumento,
+} from "./documentosdb.js";
 import io from "./servidor.js";
 
 io.on("connection", (socket) => {
   console.log("Um cliente se conectou com o ID:", socket.id);
+
+  socket.on("obter_documentos", async (devolverDocumentos) => {
+    const documentos = await encontraTodosDocumentos();
+
+    console.log(documentos);
+    devolverDocumentos(documentos);
+  });
+
+  socket.on("adicionar_documento", async (nomeDocumento) => {
+    const resultado = await adicionarDocumento(nomeDocumento);
+    console.log(resultado);
+
+    if (resultado.acknowledged) {
+      io.emit("adicionar_documento_interface", nomeDocumento);
+    }
+  });
 
   //socket para selecionar o documento e enviar o texto para o cliente
   socket.on("selecionar_documento", async (nomeDocumento, devolverTexto) => {
