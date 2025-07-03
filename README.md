@@ -20,10 +20,13 @@ Live Docs is a collaborative real-time document editing application built with N
 ```
 alura-docs/
 ├── public/
-│   ├── documento.html
-│   ├── documento.js
 │   ├── index.html
-│   └── socket-front-document.js
+│   ├── documento.html
+│   └── js/
+│       ├── index.js
+│       ├── documento.js
+│       ├── socket-front-index.js
+│       └── socket-front-document.js
 ├── src/
 │   ├── servidor.js
 │   └── socket-back.js
@@ -35,7 +38,9 @@ alura-docs/
 ```
 
 - **public/**: Frontend files (HTML, JS) served to the browser.
+- **public/js/**: All frontend JavaScript files.
 - **src/**: Backend server and WebSocket logic.
+- **assets/**: Project screenshots and images.
 
 ## Getting Started
 
