@@ -19,9 +19,6 @@ botaoAdicionar.addEventListener("click", function (e) {
   const nomeDocumento = inputNomeDocumento.value;
   emitirAdicionarDocumento(nomeDocumento);
   inputNomeDocumento.value = "";
-  //   if (nomeDocumento) {
-  //     adicionarDocumento(nomeDocumento);
-  //   }
 });
 
 export { adicionarDocumento };
