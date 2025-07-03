@@ -1,7 +1,7 @@
 //código que interage com o servidor - camada mais interna
 
+import { encontrarDocumento, updateDocumento } from "./documentosdb.js";
 import io from "./servidor.js";
-import documentosColecao from "./dbConnect.js";
 
 io.on("connection", (socket) => {
   console.log("Um cliente se conectou com o ID:", socket.id);
@@ -17,14 +17,13 @@ io.on("connection", (socket) => {
   });
 
   //socket para receber o texto do editor e enviar para os outros clientes conectados
-  socket.on("texto_editor", ({ texto, nomeDocumento }) => {
-    const documento = encontrarDocumento(nomeDocumento);
+  socket.on("texto_editor", async ({ texto, nomeDocumento }) => {
+    const atualizacao = await updateDocumento(nomeDocumento, texto);
+    console.log(atualizacao);
 
-    if (documento) {
-      documento.texto = texto;
+    if (atualizacao.modifiedCount) {
+      socket.to(nomeDocumento).emit("texto_editor_clientes", texto); // se a sala for JavaScript, envia o texto para todos os clientes conectados a essa sala
     }
-
-    socket.to(nomeDocumento).emit("texto_editor_clientes", texto); // se a sala for JavaScript, envia o texto para todos os clientes conectados a essa sala
   });
 
   //socket para desconexão
@@ -33,8 +32,3 @@ io.on("connection", (socket) => {
     Motivo: ${motivo}`);
   });
 });
-
-//encontra o documento na lista de documentos
-function encontrarDocumento(nome) {
-  return documentosColecao.findOne({ nome: nome });
-}
