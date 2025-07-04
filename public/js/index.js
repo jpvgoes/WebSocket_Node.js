@@ -7,10 +7,14 @@ const inputNomeDocumento = document.getElementById("input-documento");
 
 function adicionarDocumento(nomeDocumento) {
   listaDocumentos.innerHTML += `
-    <a href="documento.html?nome=${nomeDocumento}" class="list-group-item list-group-item-action">
+    <a href="documento.html?nome=${nomeDocumento}" class="list-group-item list-group-item-action" id="documento-${nomeDocumento}">
     ${nomeDocumento}
     </a>
     `;
+}
+function removerLinkDocumento(nomeDocumento) {
+  const documento = document.getElementById(`documento-${nomeDocumento}`);
+  listaDocumentos.removeChild(documento);
 }
 
 // ou submit se fosse o formulário
@@ -21,4 +25,4 @@ botaoAdicionar.addEventListener("click", function (e) {
   inputNomeDocumento.value = "";
 });
 
-export { adicionarDocumento };
+export { adicionarDocumento, removerLinkDocumento };

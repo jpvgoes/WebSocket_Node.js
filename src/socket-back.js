@@ -2,6 +2,7 @@
 
 import {
   adicionarDocumento,
+  deletaDocumento,
   encontrarDocumento,
   encontraTodosDocumentos,
   updateDocumento,
@@ -11,6 +12,7 @@ import io from "./servidor.js";
 io.on("connection", (socket) => {
   console.log("Um cliente se conectou com o ID:", socket.id);
 
+  // (R)EAD
   socket.on("obter_documentos", async (devolverDocumentos) => {
     const documentos = await encontraTodosDocumentos();
 
@@ -18,6 +20,7 @@ io.on("connection", (socket) => {
     devolverDocumentos(documentos);
   });
 
+  // (C)REATE
   socket.on("adicionar_documento", async (nomeDocumento) => {
     const documentoExiste = await encontrarDocumento(nomeDocumento);
 
@@ -35,6 +38,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  // (R)EAD
   //socket para selecionar o documento e enviar o texto para o cliente
   socket.on("selecionar_documento", async (nomeDocumento, devolverTexto) => {
     socket.join(nomeDocumento); //o cliente entra na sala com nome do documento
@@ -45,6 +49,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  // (U)PDATE
   //socket para receber o texto do editor e enviar para os outros clientes conectados
   socket.on("texto_editor", async ({ texto, nomeDocumento }) => {
     const atualizacao = await updateDocumento(nomeDocumento, texto);
@@ -52,6 +57,15 @@ io.on("connection", (socket) => {
 
     if (atualizacao.modifiedCount) {
       socket.to(nomeDocumento).emit("texto_editor_clientes", texto); // se a sala for JavaScript, envia o texto para todos os clientes conectados a essa sala
+    }
+  });
+
+  // (D)ELETE
+  socket.on("excluir_documento", async (nomeDocumento) => {
+    const resultado = await deletaDocumento(nomeDocumento);
+    console.log(resultado);
+    if (resultado.acknowledged) {
+      io.emit("documento_excluir_sucesso", nomeDocumento);
     }
   });
 

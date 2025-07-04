@@ -5,6 +5,7 @@ function encontrarDocumento(nome) {
   return documentosColecao.findOne({ nome: nome });
 }
 
+//update no documento
 function updateDocumento(nomeDocumento, texto) {
   return documentosColecao.updateOne(
     { nome: nomeDocumento },
@@ -12,6 +13,7 @@ function updateDocumento(nomeDocumento, texto) {
   );
 }
 
+//encontra todos os documentos
 function encontraTodosDocumentos() {
   return documentosColecao.find({}).toArray();
 }
@@ -24,9 +26,14 @@ function adicionarDocumento(nomeDocumento) {
   });
 }
 
+function deletaDocumento(nomeDocumento) {
+  return documentosColecao.deleteOne({ nome: nomeDocumento });
+}
+
 export {
   encontrarDocumento,
   updateDocumento,
   encontraTodosDocumentos,
   adicionarDocumento,
+  deletaDocumento,
 };
