@@ -12,6 +12,10 @@ function emitirAdicionarDocumento(nomeDocumento) {
   socket.emit("adicionar_documento", nomeDocumento);
 }
 
+socket.on("documento_existente", (nomeDocumento) => {
+  alert(`Documento com o nome "${nomeDocumento}" já existe.`);
+});
+
 socket.on("adicionar_documento_interface", (nomeDocumento) => {
   adicionarDocumento(nomeDocumento);
 });

@@ -19,6 +19,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("adicionar_documento", async (nomeDocumento) => {
+    const documentoExiste = await encontrarDocumento(nomeDocumento);
+
+    if (documentoExiste) {
+      console.log(`Documento ${nomeDocumento} já existe`);
+      socket.emit("documento_existente", nomeDocumento);
+      return;
+    }
+
     const resultado = await adicionarDocumento(nomeDocumento);
     console.log(resultado);
 
