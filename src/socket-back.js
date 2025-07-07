@@ -6,7 +6,7 @@ import {
   encontrarDocumento,
   encontraTodosDocumentos,
   updateDocumento,
-} from "./documentosdb.js";
+} from "./db/documentosdb.js";
 import io from "./servidor.js";
 
 io.on("connection", (socket) => {
