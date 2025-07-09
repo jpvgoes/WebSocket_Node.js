@@ -1,4 +1,4 @@
-import documentosColecao from "./dbConnect.js";
+import { documentosColecao } from "./dbConnect.js";
 
 //encontra o documento na lista de documentos
 function encontrarDocumento(nome) {

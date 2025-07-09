@@ -21,8 +21,10 @@ function removerLinkDocumento(nomeDocumento) {
 botaoAdicionar.addEventListener("click", function (e) {
   e.preventDefault();
   const nomeDocumento = inputNomeDocumento.value;
-  emitirAdicionarDocumento(nomeDocumento);
-  inputNomeDocumento.value = "";
+  if (nomeDocumento) {
+    emitirAdicionarDocumento(nomeDocumento);
+    inputNomeDocumento.value = "";
+  }
 });
 
 export { adicionarDocumento, removerLinkDocumento };

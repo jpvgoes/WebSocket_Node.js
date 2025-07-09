@@ -15,14 +15,17 @@ const client = new MongoClient(uri, {
 });
 
 let documentosColecao;
+let usuariosColecao;
+
 try {
   // Connect the client to the server (only once)
   await client.connect();
   const db = client.db("alura-websockets");
   documentosColecao = db.collection("documentos");
+  usuariosColecao = db.collection("usuarios");
 } catch (error) {
   console.error("Erro ao conectar ao banco de dados:", error);
   throw error;
 }
 
-export default documentosColecao;
+export { documentosColecao, usuariosColecao };

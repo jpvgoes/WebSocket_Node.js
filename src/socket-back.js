@@ -1,4 +1,5 @@
 //código que interage com o servidor - camada mais interna
+// obs: depois criar pastas de operações de socket para documentos e usuarios
 
 import {
   adicionarDocumento,
@@ -7,6 +8,7 @@ import {
   encontraTodosDocumentos,
   updateDocumento,
 } from "./db/documentosdb.js";
+import { cadastrar_usuario, encontrar_usuario } from "./db/usuariosdb.js"; //
 import io from "./servidor.js";
 
 io.on("connection", (socket) => {
@@ -66,6 +68,20 @@ io.on("connection", (socket) => {
     console.log(resultado);
     if (resultado.acknowledged) {
       io.emit("documento_excluir_sucesso", nomeDocumento);
+    }
+  });
+
+  socket.on("cadastrar_usuario", async (dados) => {
+    const usuarioExiste = await encontrar_usuario(dados.usuario);
+    if (usuarioExiste) {
+      socket.emit("cadastro_erro", "Usuário já existe");
+      return;
+    }
+    const resultado = await cadastrar_usuario(dados);
+    if (resultado.acknowledged) {
+      socket.emit("cadastro_sucesso");
+    } else {
+      socket.emit("cadastro_erro", "Erro ao cadastrar usuário");
     }
   });
 
