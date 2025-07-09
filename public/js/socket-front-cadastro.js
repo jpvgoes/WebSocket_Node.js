@@ -1,4 +1,4 @@
-const socket = io();
+const socket = io("ws://localhost:3000");
 
 function cadastrarUsuario(dados) {
   socket.emit("cadastrar_usuario", dados);

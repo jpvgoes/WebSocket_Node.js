@@ -17,7 +17,9 @@ app.use(e.static(diretorioPublico));
 const servidorHttp = http.createServer(app);
 
 servidorHttp.listen(3000, () => {
-  console.log(`Servidor escutando em http://localhost:${PORT}`);
+  console.log(
+    `Servidor escutando em http://localhost:${PORT}/login/index.html`
+  );
 });
 
 const io = new Server(servidorHttp);

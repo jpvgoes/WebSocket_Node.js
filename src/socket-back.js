@@ -10,6 +10,7 @@ import {
 } from "./db/documentosdb.js";
 import { cadastrar_usuario, encontrar_usuario } from "./db/usuariosdb.js"; //
 import io from "./servidor.js";
+import autenticarUsuario from "./utils/autenticarUsuario.js";
 
 io.on("connection", (socket) => {
   console.log("Um cliente se conectou com o ID:", socket.id);
@@ -82,6 +83,20 @@ io.on("connection", (socket) => {
       socket.emit("cadastro_sucesso");
     } else {
       socket.emit("cadastro_erro", "Erro ao cadastrar usuário");
+    }
+  });
+
+  socket.on("autenticar_usuario", async ({ usuario, senha }) => {
+    const usuarioExiste = await encontrar_usuario(usuario);
+    const autenticado = usuarioExiste
+      ? autenticarUsuario(usuarioExiste, senha)
+      : false;
+    console.log(autenticado);
+    if (autenticado) {
+      console.log(autenticado);
+      socket.emit("autenticar_sucesso");
+    } else {
+      socket.emit("autenticar_erro", "Erro ao autenticar usuário");
     }
   });
 
