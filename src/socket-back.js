@@ -8,9 +8,10 @@ import {
   encontraTodosDocumentos,
   updateDocumento,
 } from "./db/documentosdb.js";
-import { cadastrar_usuario, encontrar_usuario } from "./db/usuariosdb.js"; //
+import { cadastrar_usuario, encontrar_usuario } from "./db/usuariosdb.js";
 import io from "./servidor.js";
 import autenticarUsuario from "./utils/autenticarUsuario.js";
+import gerarJwt from "./utils/gerarJwt.js";
 
 io.on("connection", (socket) => {
   console.log("Um cliente se conectou com o ID:", socket.id);
@@ -93,8 +94,9 @@ io.on("connection", (socket) => {
       : false;
     console.log(autenticado);
     if (autenticado) {
-      console.log(autenticado);
-      socket.emit("autenticar_sucesso");
+      const tokenJwt = gerarJwt(usuario);
+      console.log(tokenJwt);
+      socket.emit("autenticar_sucesso", tokenJwt);
     } else {
       socket.emit("autenticar_erro", "Erro ao autenticar usuário");
     }
